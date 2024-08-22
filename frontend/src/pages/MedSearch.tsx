@@ -1,8 +1,9 @@
+import SearchPage from "../components/SearchPage"
 
 const MedSearch: React.FC = () => {
 
     return(
-        <h1>MedSearch</h1>
+        <SearchPage />
     )
 }
 

@@ -15,7 +15,7 @@ const SearchPage: React.FC = () => {
   ]
 
   return(
-    <Container fluid style={{width: "100vw", height: "100vh"}} className="d-flex flex-column align-items-start ps-0">
+    <Container fluid style={{width: "100vw", height: "100vh", marginTop: "200px"}} className="d-flex flex-column align-items-start ps-0 pt-5 mt-5">
       <Form className="body p-3">
         <h2 className="me-2">Search</h2>
         <FormControl

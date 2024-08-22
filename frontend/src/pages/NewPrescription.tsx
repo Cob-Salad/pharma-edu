@@ -1,16 +1,19 @@
 import inputs from "../Inputs"
 import Form from "react-bootstrap/Form"
 import FormInput from "../components/FormInput"
-import { InputGroup, Row, Col, FormControl, FloatingLabel } from "react-bootstrap"
+import { InputGroup, Row, Col, FormControl, FloatingLabel, Button } from "react-bootstrap"
+import { LinkContainer } from "react-router-bootstrap"
+import { Route, Router, Routes } from "react-router-dom"
+import PrescriptionSearch from "./PrescriptionSearch"
 
 const NewPrescription: React.FC = () => {
 
     return(
 
     
-        <div className="body pt-5"> 
+        <div className="content-wrapper"> 
         
-            <Form className="section pt-5">
+            <Form className="section px-5">
                 <h2>New Prescription</h2>
                 {inputs.map((obj) => <FormInput key={obj.id} label={obj.label} type={obj.type} placeholder={obj.placeholder} />
             )}
@@ -48,19 +51,39 @@ const NewPrescription: React.FC = () => {
                     controlId="floatingTextarea"
                     label={"Instructions"}
                     className="mb-3">
-                        <FormControl as="textarea" aria-label="written_amount" placeholder="Leave a Comment here" style={{height: '100px'}}/>
+                        <FormControl as="textarea" aria-label="Instructions" placeholder="Leave a Comment here" style={{height: '100px'}}/>
                     </FloatingLabel>
                 </InputGroup>
+                <div style={{display: "flex", flexDirection: "row"}}>
+                <InputGroup>
+                    <FloatingLabel
+                        controlId="floatingTextarea"
+                        label={"Tech Initials"}
+                        className="mb-3">
+                            <FormControl as="textarea" aria-label="initials" placeholder="Leave a Comment here" style={{width: '200px'}}/>
+                        </FloatingLabel>
 
+                </InputGroup>
 
+                <Button style={{width: '200px'}} className="btn-primary">Print Label</Button>
+                </div>
             </Form>
             <div className="line" />
-            <div className="section pt-5">
+            <div className="section px-5">
                 <h2>Label</h2>
-                <h3 style={{height: "725px", width: "675px", backgroundColor: "blue"}}>
+                <h3 style={{height: "600px", width: "675px", backgroundColor: "blue"}}>
                     Image </h3>
-            
+            <Router location={""} navigator={undefined}>
+                <LinkContainer to="/prescription_search">
+                <Button>Previous Prescriptions</Button>
+                </LinkContainer>
+                <Routes>
+                    <Route path="/prescription_search" element={<PrescriptionSearch />} />
+                </Routes>
+            </Router>
+                
             </div>
+            
         </div>
     
     )

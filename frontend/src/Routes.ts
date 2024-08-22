@@ -14,9 +14,9 @@ interface NavBarLinks {
 const routes: NavBarLinks[]= [ 
     {link:"Prescriptions", path:"/new_prescription", component: NewPrescription}, 
     {link:"Queue", path:"/queue", component: Queue},
-    {link:"Patient Search", path:"/patient_Search", component: PatientSearch},
-    {link:"Doctors", path:"/doctors", component: Doctors},
-    {link:"Medication", path:"/med_search", component: MedSearch},
+    {link:"Patients", path:"/patient_search", component: PatientSearch},
+    {link:"Doctors", path:"/doctor_search", component: Doctors},
+    {link:"Medication", path:"/medication_search", component: MedSearch},
 ]
 
 export default routes

@@ -7,8 +7,13 @@ import { Accordion } from "react-bootstrap"
 import SearchPage from "../components/SearchPage"
 import { Container } from "react-bootstrap"
 import SearchResult from "../components/SearchResult"
+import DataFetcher from "../components/DataFetcher"
+
 
 const PatientProfile: React.FC = () => {
+
+
+
   const SearchResultObj = [
     {
     name: "Example name",
@@ -22,6 +27,7 @@ const PatientProfile: React.FC = () => {
         <div>
             
             <div className="body pt-5"> 
+              
               <Form className="section pt-3 px-5">
                 <h2>Patient Information</h2>
                 <InputGroup className="my-2" >
@@ -51,6 +57,7 @@ const PatientProfile: React.FC = () => {
                   </FloatingLabel>
                 </InputGroup>
               </Form>
+          
             <div className="line"/>
             <div className="section pt-3">
             <Accordion style={{width: "48vw"}} className=" mx-4" defaultActiveKey="0">
@@ -103,7 +110,7 @@ const PatientProfile: React.FC = () => {
                       className="me-1 w-100"
                       aria-label="Search" />
                   </Form>
-                  {SearchResultObj.map((obj, index) => <SearchResult name={obj.name} descriptor={obj.descriptor} someProfile={obj.someProfile} />)}
+                  {SearchResultObj.map((obj, index) => <SearchResult key={index} name={obj.name} descriptor={obj.descriptor} someProfile={obj.someProfile} />)}
 
                   <h1>this page will be repeated over the other search pages</h1>
               </Container>                

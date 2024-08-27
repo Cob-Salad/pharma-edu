@@ -4,7 +4,12 @@ from sqlmodel import Session, select
 from database import get_db
 from exceptions import PatientNotFound
 from models import Patient
-from schemas import PatientBasicInfo, PatientCreateResponse, PatientUpdateRequest
+from schemas import (
+    PatientBasicInfo,
+    PatientCreateRequest,
+    PatientCreateResponse,
+    PatientUpdateRequest
+)
 
 router = APIRouter()
 
@@ -24,7 +29,8 @@ async def get_patient(patient_id: int, session: Session = Depends(get_db)) -> Pa
 
 
 @router.post("/patients")
-async def create_patient(patient: Patient, session: Session = Depends(get_db)) -> PatientCreateResponse:
+async def create_patient(patient_create_request: PatientCreateRequest, session: Session = Depends(get_db)) -> PatientCreateResponse:
+    patient: Patient = Patient.from_orm(patient_create_request)
     session.add(patient)
     session.commit()
     session.refresh(patient)

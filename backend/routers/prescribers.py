@@ -4,7 +4,7 @@ from sqlmodel import Session, select
 from exceptions import PrescriberNotFound
 from database import get_db
 from models import Prescriber
-from schemas import PrescriberCreateResponse, PrescriberUpdateRequest
+from schemas import PrescriberCreateRequest, PrescriberCreateResponse, PrescriberUpdateRequest
 
 router = APIRouter()
 
@@ -17,7 +17,8 @@ async def get_prescribers(session: Session = Depends(get_db)):
 
 
 @router.post("/prescribers")
-async def create_prescriber(prescriber: Prescriber, session: Session = Depends(get_db)) -> PrescriberCreateResponse:
+async def create_prescriber(prescriber_create_request: PrescriberCreateRequest, session: Session = Depends(get_db)) -> PrescriberCreateResponse:
+    prescriber: Prescriber = Prescriber.from_orm(prescriber_create_request)
     session.add(prescriber)
     session.commit()
     session.refresh(prescriber)

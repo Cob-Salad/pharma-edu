@@ -1,5 +1,5 @@
 import NavItem from "./NavItem"
-import links from "../Routes";
+import links from "../NavRoutes";
 import Navbar from "react-bootstrap/Navbar";
 import { Image } from "react-bootstrap";
 import Nav from "react-bootstrap/Nav"

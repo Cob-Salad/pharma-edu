@@ -1,9 +1,11 @@
 import './App.css'
 import { Route, Routes } from 'react-router-dom'
+import nav_routes from './NavRoutes'
 import routes from './Routes'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import TempNavigation from './components/TempNavbar';
-import { Container } from 'react-bootstrap';
+import { Container, Image } from 'react-bootstrap';
+import './assets/grayslash.svg'
 
 
 {/* credit for art to be used
@@ -16,8 +18,10 @@ function App() {
         <TempNavigation />
       </Container>
       <Routes>
+        {nav_routes.map((obj)=> <Route key={obj.link} path={obj.path} element={<obj.component />} />)}
         {routes.map((obj)=> <Route key={obj.link} path={obj.path} element={<obj.component />} />)}
       </Routes>
+      <Image src='src/assets/grayslash.svg' className='background-container' style={{width: "100vw"}} />
       
     </div>
   );

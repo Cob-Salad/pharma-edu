@@ -3,8 +3,6 @@ import Form from "react-bootstrap/Form"
 import FormInput from "../components/FormInput"
 import { InputGroup, Row, Col, FormControl, FloatingLabel, Button } from "react-bootstrap"
 import { LinkContainer } from "react-router-bootstrap"
-import { Route, Router, Routes } from "react-router-dom"
-import PrescriptionSearch from "./PrescriptionSearch"
 
 const NewPrescription: React.FC = () => {
 
@@ -73,14 +71,11 @@ const NewPrescription: React.FC = () => {
                 <h2>Label</h2>
                 <h3 style={{height: "600px", width: "675px", backgroundColor: "blue"}}>
                     Image </h3>
-            <Router location={""} navigator={undefined}>
-                <LinkContainer to="/prescription_search">
+
+            <LinkContainer to="/patient_profile">
                 <Button>Previous Prescriptions</Button>
-                </LinkContainer>
-                <Routes>
-                    <Route path="/prescription_search" element={<PrescriptionSearch />} />
-                </Routes>
-            </Router>
+            </LinkContainer>
+
                 
             </div>
             

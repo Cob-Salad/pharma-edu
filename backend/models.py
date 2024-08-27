@@ -2,6 +2,8 @@ from sqlmodel import SQLModel, Field, Relationship
 from datetime import date
 from enum import Enum
 
+# TODO: Maybe add an enum for drug class.
+
 
 class State(str, Enum):
     AL = "AL"
@@ -56,7 +58,7 @@ class State(str, Enum):
     WY = "WY"
 
 
-class DoctorType(str, Enum):
+class PrescriberType(str, Enum):
     MD = "MD"
     DO = "DO"
     DPM = "DPM"
@@ -72,108 +74,95 @@ class DoctorType(str, Enum):
 
     def description(self):
         match self:
-            case DoctorType.MD:
+            case PrescriberType.MD:
                 return "Doctor of Medicine"
-            case DoctorType.DO:
+            case PrescriberType.DO:
                 return "Doctor of Osteopathic Medicine"
-            case DoctorType.DPM:
+            case PrescriberType.DPM:
                 return "Doctor of Podiatric Medicine"
-            case DoctorType.DDS:
+            case PrescriberType.DDS:
                 return "Doctor of Dental Surgery"
-            case DoctorType.DMD:
+            case PrescriberType.DMD:
                 return "Doctor of Medicine in Dentistry or Doctor of Dental Medicine"
-            case DoctorType.OD:
+            case PrescriberType.OD:
                 return "Doctor of Optometry"
-            case DoctorType.PharmD:
+            case PrescriberType.PharmD:
                 return "Doctor of Pharmacy"
-            case DoctorType.DC:
+            case PrescriberType.DC:
                 return "Doctor of Chiropractic"
-            case DoctorType.ND:
+            case PrescriberType.ND:
                 return "Doctor of Naturopathic Medicine"
-            case DoctorType.NMD:
+            case PrescriberType.NMD:
                 return "Doctor of Naturopathic Medicine"
-            case DoctorType.DVM:
+            case PrescriberType.DVM:
                 return "Doctor of Veterinary Medicine"
-            case DoctorType.PhD:
+            case PrescriberType.PhD:
                 return "Doctor of Philosophy in Medical Field"
             case _:
-                return "Unknown Doctor Type"
+                return "Unknown Prescriber Type"
 
 
-class Address(SQLModel, table=True):
-    id: int | None = Field(default=None, primary_key=True)
-    number: str | None = None
-    street_name: str | None = None
-    city: str | None = None
-    state: State | None = None
-    zipcode: str | None = None
-    country: str | None = None
-
-
-class PatientDoctorLink(SQLModel, table=True):
-    id: int | None = Field(default=None, primary_key=True)
-    patient_id: int = Field(foreign_key="patient.id")
-    doctor_id: int = Field(foreign_key="doctor.id")
-
-
-class Doctor(SQLModel, table=True):
-    id: int | None = Field(default=None, primary_key=True)
-    first_name: str
-    last_name: str
-    doctor_type: DoctorType = DoctorType.MD
-    office_address_id: int = Field(foreign_key="address.id")
-    office_address: Address = Relationship()
-    contact_number: str | None = None
-    contact_email: str | None = None
-    dea_number: str | None = None
-    patients: list["Patient"] = Relationship(
-        back_populates="doctors", link_model=PatientDoctorLink
-    )
-
-
-class Insurance(SQLModel, table=True):
-    id: int | None = Field(default=None, primary_key=True)
-    member_id_number: str | None = None
-    group_number: str | None = None
-    rx_bin: str | None = None
-    rx_pcn: str | None = None
-    person_code: str | None = None
+class PrescriptionStatus(str, Enum):
+    PENDING = "pending"
+    COMPLETED = "completed"
+    SOLD = "sold"
 
 
 class Patient(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     first_name: str
     last_name: str
-    contact_number: str | None = None
-    contact_email: str | None = None
-    dob: date
-    home_address_id: int = Field(foreign_key="address.id")
-    doctors: list[Doctor] = Relationship(
-        back_populates="patients", link_model=PatientDoctorLink
-    )
-    prescriptions: list["PrescribedRx"] = Relationship(back_populates="patient")
-    insurance_id: int = Field(foreign_key="insurance.id")
+    date_of_birth: date
+    street: str
+    city: str
+    state: State
+    zipcode: str
+    allergies: str = ""
+    prescriptions: list["Prescription"] = Relationship(back_populates="patient")
+    insurance_name: str | None = None
+    insurance_member_id: str | None = None
+    insurance_group_number: str | None = None
+    insurance_rx_bin: str | None = None
+    insurance_rx_pcn: str | None = None
 
 
-class PrescribedRx(SQLModel, table=True):
+class Prescriber(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
-    rx_id: int = Field(foreign_key="rx.id")
-    rx: "Rx" = Relationship()
-    dosage: str
-    sig_code_id: int = Field(foreign_key="sigcode.id")
-    sig_code: "SigCode" = Relationship()
+    first_name: str
+    last_name: str
+    prescriber_type: PrescriberType = PrescriberType.MD
+    street: str
+    city: str
+    state: State
+    zipcode: str
+    contact_number: str | None = None
+    dea: str | None = None
+    npi: str | None = None
+
+
+class Prescription(SQLModel, table=True):
+    rx_number: int | None = Field(default=None, primary_key=True)
     patient_id: int = Field(foreign_key="patient.id")
     patient: Patient = Relationship(back_populates="prescriptions")
+    prescriber_id: int = Field(foreign_key="prescriber.id")
+    prescriber: Prescriber = Relationship()
     prescribed_date: date
+    rx_item_id: int = Field(foreign_key="rxitem.id")
+    rx_item: "RxItem" = Relationship()
+    directions: str
+    quantity: int
+    quantity_dispensed: int
     refills: int
-    count: int
+    status: PrescriptionStatus = PrescriptionStatus.PENDING
+    tech_initials: str
 
 
-class Rx(SQLModel, table=True):
+class RxItem(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     name: str
-
-
-class SigCode(SQLModel, table=True):
-    id: int | None = Field(default=None, primary_key=True)
-    code: str
+    strength: str
+    ndc: str
+    expiration: date | None = None
+    lot_number: str
+    dea_schedule: str | None = None
+    drug_class: str | None = None

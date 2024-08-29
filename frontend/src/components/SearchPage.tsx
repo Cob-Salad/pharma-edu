@@ -34,7 +34,7 @@ const SearchPage: React.FC = () => {
           className="me-1 w-100"
           aria-label="Search" />
       </Form>
-      {SearchResultObj.map((obj, index) => <SearchResult name={obj.name} descriptor={obj.descriptor} someProfile={obj.someProfile} />)}
+      {SearchResultObj.map((obj, index) => <SearchResult key={index} name={obj.name} descriptor={obj.descriptor} someProfile={obj.someProfile} />)}
 
       <h1>this page will be repeated over the other search pages</h1>
     </Container>

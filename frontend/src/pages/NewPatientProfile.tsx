@@ -4,10 +4,10 @@ import FormControl from "react-bootstrap/FormControl"
 import AddressInput from "./AddressInput"
 import FloatingLabel from "react-bootstrap/FloatingLabel"
 import { Accordion } from "react-bootstrap"
-import SearchPage from "../components/SearchPage"
 import { Container } from "react-bootstrap"
 import SearchResult from "../components/SearchResult"
-import DataFetcher from "../components/DataFetcher"
+import React, { useState } from "react"
+
 
 interface PatientProps {
   id: number;
@@ -29,18 +29,35 @@ interface PatientProps {
 
 
 
-const PatientProfile: React.FC<PatientProps> = ({  }) => {
+const PatientProfile: React.FC<PatientProps> = ({ 
+  id }) => {
+  const [formData, setFormData] = useState<PatientProps>({
+    id: id,
+    first_name: "",
+    last_name: "",
+    date_of_birth: "",
+    street: "",
+    city: "",
+    state: "",
+    zipcode: "",
+    allergies: "",
+    insurance_member_id: "",
+    insurance_rx_bin: "",
+    insurance_name: "",
+    insurance_group_number: "",
+    insurance_rx_pcn: "",
+  })
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData
+    });
+  };
 
-
-  const SearchResultObj = [
-    {
-    name: "Example name",
-    descriptor: "Dob, Doc type, Med Type",
-    someProfile: "this will be a connection to a profile"
-    }
-  ]
-
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("Form Data: ", formData)
+  }
 
     return(
         <div>
@@ -51,26 +68,21 @@ const PatientProfile: React.FC<PatientProps> = ({  }) => {
                 <h2>Patient Information</h2>
                 <InputGroup className="my-2" >
                   <InputGroup.Text>Last, First Name</InputGroup.Text>
-                  <FormControl aria-label="Last Name"  placeholder="Last Name"/>
-                  <FormControl aria-label="First Name" placeholder="First Name"/>
+                  <FormControl aria-label="Last Name" value={formData.first_name} onChange={handleChange} placeholder="Last Name"/>
+                  <FormControl aria-label="First Name" value={formData.last_name} onChange={handleChange} placeholder="First Name"/>
                 </InputGroup>
                 
                 <InputGroup className="my-2">
                   <InputGroup.Text>Date of Birth</InputGroup.Text>
-                  <FormControl aria-label="date" type="date" />
+                  <FormControl aria-label="date" value={formData.date_of_birth} onChange={handleChange} type="date" />
                 </InputGroup>
 
                 <AddressInput />
 
                 <InputGroup className="my-2">
-                  <InputGroup.Text>Primary Doctor</InputGroup.Text>
-                  <FormControl aria-label="Doctor Profile" placeholder="Doctor Profile"/>
-                </InputGroup>
-
-                <InputGroup className="my-2">
                   <FloatingLabel 
                     controlId="floatingTextarea"
-                    label={"Allergies"}
+                    label={"Allergies"} defaultValue={formData.allergies}
                     className="mb-3">
                       <FormControl as="textarea" aria-label="Allergies" placeholder="Leave a Comment here" style={{height: '100px'}}/>
                   </FloatingLabel>

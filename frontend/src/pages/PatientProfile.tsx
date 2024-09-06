@@ -4,12 +4,12 @@ import FormControl from "react-bootstrap/FormControl"
 import AddressInput from "./AddressInput"
 import FloatingLabel from "react-bootstrap/FloatingLabel"
 import { Accordion } from "react-bootstrap"
-import SearchPage from "../components/SearchPage"
 import { Container } from "react-bootstrap"
-import SearchResult from "../components/SearchResult"
-import DataFetcher from "../components/DataFetcher"
+import { useEffect, useState } from "react";
+import { fetchData } from "../components/PatientCalls"
 
-interface PatientProps {
+
+interface PatientData {
   id: number;
   first_name: string;
   last_name: string;
@@ -28,25 +28,24 @@ interface PatientProps {
 
 
 
+const PatientProfile: React.FC<PatientData> = ({
+    id, first_name, last_name, date_of_birth, street, city, state, zipcode, allergies, insurance_group_number, insurance_member_id, insurance_name,insurance_rx_bin, insurance_rx_pcn
+  }) => {
 
-const PatientProfile: React.FC<PatientProps> = ({  }) => {
+  const [response, setResponse] = useState<PatientData[] | undefined>();
 
+    useEffect(() => {
+      const grab = async () => {
+        const patientData = await fetchData(id);
+        setResponse(patientData);
+      }
+      grab()
+    },[])
+  
 
-
-  const SearchResultObj = [
-    {
-    name: "Example name",
-    descriptor: "Dob, Doc type, Med Type",
-    someProfile: "this will be a connection to a profile"
-    }
-  ]
-
-
-    return(
+  return(
         <div>
-            
-            <div className="body pt-5"> 
-              
+            <div className="body pt-5">
               <Form className="section pt-3 px-5">
                 <h2>Patient Information</h2>
                 <InputGroup className="my-2" >
@@ -129,7 +128,6 @@ const PatientProfile: React.FC<PatientProps> = ({  }) => {
                       className="me-1 w-100"
                       aria-label="Search" />
                   </Form>
-                  {SearchResultObj.map((obj, index) => <SearchResult key={index} name={obj.name} descriptor={obj.descriptor} someProfile={obj.someProfile} />)}
 
                   <h1>this page will be repeated over the other search pages</h1>
               </Container>                
@@ -139,7 +137,5 @@ const PatientProfile: React.FC<PatientProps> = ({  }) => {
             </div>
             </div>
         </div>
-    )
-}
-
+    )}
 export default PatientProfile

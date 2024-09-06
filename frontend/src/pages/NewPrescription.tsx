@@ -13,7 +13,7 @@ const NewPrescription: React.FC = () => {
         
             <Form className="section px-5">
                 <h2>New Prescription</h2>
-                {inputs.map((obj) => <FormInput key={obj.id} label={obj.label} type={obj.type} placeholder={obj.placeholder} />
+                {inputs.map((obj) => <FormInput key={obj.id} label={obj.label} directory={obj.directory} type={obj.type} placeholder={obj.placeholder} />
             )}
                 <InputGroup >
                     <h4>Quantity:</h4>

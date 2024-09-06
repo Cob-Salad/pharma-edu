@@ -5,7 +5,7 @@ import SearchPage from "../components/SearchPage"
 const PrescriptionSearch: React.FC = () => {
 
   return(
-    <SearchPage/>
+    <SearchPage directory="prescriptions" />
 
   )
 }

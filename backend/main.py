@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from routers import patients, prescribers, prescriptions, rx_items
 
 
-app = FastAPI()
+app = FastAPI(title="Pharma-EDU", version="0.1.0")
 
 origins = ["*"]
 

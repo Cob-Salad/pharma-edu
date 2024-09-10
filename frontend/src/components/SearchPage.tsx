@@ -1,5 +1,6 @@
 import { Container, Form, FormControl, Button, Row, Col } from "react-bootstrap";
 import SearchResult from "./SearchResult";
+import { LinkContainer } from "react-router-bootstrap";
 
 
 export interface SearchResults {
@@ -15,11 +16,13 @@ export interface placeholder {
 }
 interface SearchProp{
   directory: string
+  new_addition: string
+  new_directory: string
   filters: placeholder
   response: SearchResults[]
 }
 
-const SearchPage: React.FC<SearchProp> = ({ directory, filters, response }) => {
+const SearchPage: React.FC<SearchProp> = ({ directory, filters, response, new_addition, new_directory }) => {
   
 
 
@@ -42,6 +45,9 @@ const SearchPage: React.FC<SearchProp> = ({ directory, filters, response }) => {
           placeholder={filters.searchThree}
           className="me-1 w-100"
           aria-label="Search" />
+        <LinkContainer to={`/${new_directory}`}>
+        <Button>New {new_addition}</Button>
+        </LinkContainer>
       </Form>
       <Container fluid>
         <Row>

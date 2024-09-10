@@ -1,4 +1,4 @@
-import { Col, Container, Row} from "react-bootstrap"
+import { Col, Row} from "react-bootstrap"
 import { LinkContainer }  from "react-router-bootstrap"
 
 
@@ -9,7 +9,6 @@ interface SearchResultProps {
   descriptor: string;
   id: number;
 }
-const patientSearchID: number = id
 
 
 const SearchResult: React.FC<SearchResultProps> = ({ directory, fieldOne, fieldTwo, descriptor, id}) => {

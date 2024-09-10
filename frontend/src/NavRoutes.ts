@@ -1,4 +1,4 @@
-import PatientSearch from "./pages/PatientSearch";
+import PatientSearch from "./pages/PatientPages/PatientSearch";
 import NewPrescription from "./pages/NewPrescription";
 import Doctors from "./pages/Doctors";
 import MedSearch from "./pages/MedSearch";

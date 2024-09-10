@@ -4,9 +4,8 @@ import nav_routes from './NavRoutes'
 import routes from './Routes'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import TempNavigation from './components/TempNavbar';
-import { Container, Image } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import './assets/grayslash.svg'
-
 
 {
   
@@ -15,6 +14,7 @@ import './assets/grayslash.svg'
    <a href="https://www.flaticon.com/free-icons/pharmacy" title="pharmacy icons">Pharmacy icons created by Freepik - Flaticon</a> */}
 function App() {
 
+
   return (
     <div >
       <Container>
@@ -22,7 +22,7 @@ function App() {
       </Container>
       <Routes>
         {nav_routes.map((obj)=> <Route key={obj.link} path={obj.path} element={<obj.component />} />)}
-        {routes.map((obj)=> <Route key={obj.link} path={obj.path} element={<obj.component />} />)}
+        {routes.map((obj)=> <Route key={obj.link} path={obj.path} element={<obj.component/>} />)}
       </Routes>
       
       

@@ -1,6 +1,7 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
 import NavItem from '../components/NavItem';
+import { Container } from 'react-bootstrap';
 
 const QueuePage: React.FC = () => {
   // Inline styles specific to QueuePage
@@ -34,21 +35,11 @@ const QueuePage: React.FC = () => {
 
   return (
     <div>
-      <Navbar>
-        <NavItem href="#">Prescription</NavItem>
-        <NavItem href="#" active>Queue</NavItem>
-        <NavItem href="#">Patients</NavItem>
-        <NavItem href="#">Doctors</NavItem>
-        <NavItem href="#">Medications</NavItem>
-        <div>DIXIE TECHNICAL COLLEGE</div>
-      </Navbar>
-      <div style={pageStyles.cardContainer}>
+      <Container fluid={true} style={pageStyles.cardContainer}>
         <Card title="Scan Image" />
         <Card title="Scan Image" />
         <Card title="Scan Image" />
-        <Card title="Scan Image" />
-        <Card title="Scan Image" />
-      </div>
+      </Container>
     </div>
   );
 };

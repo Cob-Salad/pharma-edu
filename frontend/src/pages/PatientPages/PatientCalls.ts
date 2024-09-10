@@ -46,9 +46,13 @@ export const fetchData = async (id: number): Promise<PatientData> => {
   return data
 }
 
-export const postPatient = async (data: ) => {
+export const postPatient = async (data: PatientData) => {
   const response = await fetch("http://127.0.0.1:8000/patients", {
     method: "Post",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
   })
   if (!response.ok) {
     throw new Error;
@@ -57,9 +61,13 @@ export const postPatient = async (data: ) => {
   return result
 }
 
-export const patchPatient = async (data: ) => {
+export const patchPatient = async (data: PatientData) => {
   const response = await fetch("http://127.0.0.1:8000/patients", {
-    method: "Post",
+    method: "Patch",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
   })
   if (!response.ok) {
     throw new Error;
@@ -69,7 +77,7 @@ export const patchPatient = async (data: ) => {
 }
 
 export const deletePatient = async (id: number) => {
-  const response = await fetch("http://127.0.0.1:8000/patients", {
+  const response = await fetch(`http://127.0.0.1:8000/patients/${id}`, {
     method: "DELETE",
   })
   if (!response.ok) {

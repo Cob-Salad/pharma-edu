@@ -1,7 +1,6 @@
-import SearchPage, { SearchResults, placeholder } from "../components/SearchPage"
+import SearchPage, { SearchResults, placeholder } from "../../components/SearchPage"
 import { useEffect, useState } from "react";
-import fetchPatients from "../components/PatientCalls";
-
+import fetchPatients from "./PatientCalls";
 interface Data {
     id: number;
     first_name: string;
@@ -32,7 +31,7 @@ const PatientSearch: React.FC = () => {
         }
 
     return(
-        <SearchPage directory="patients" filters={patientPlaceholder} response={patientArray} />
+        <SearchPage directory="patients" filters={patientPlaceholder} response={patientArray} new_addition="Patient" new_directory="new_patient" />
     )
 }
 

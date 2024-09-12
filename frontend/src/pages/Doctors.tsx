@@ -41,7 +41,7 @@ const Doctors: React.FC = () => {
         }
 
     return(
-        <SearchPage directory="prescribers" filters={docPlaceholders} response={doctorArray}/>
+        <SearchPage directory="prescribers" filters={docPlaceholders} response={doctorArray} new_addition="Doctor" new_directory="new_doctor"/>
     )
 }
 

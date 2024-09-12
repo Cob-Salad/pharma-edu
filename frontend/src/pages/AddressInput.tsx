@@ -23,17 +23,18 @@ const AddressInput: React.FC<AddressProps> = ({ street, city, state, zipcode, ha
       <Row>
         <div className="my-2">
           <Form.Label><h5 className="m-0">Address</h5></Form.Label>
-          <FormControl aria-label="street" value={street} onChange={handle} placeholder="street"/> 
+          <FormControl aria-label="street" name="street" value={street} onChange={handle} placeholder="street"/> 
         </div>
         <Col>
-          <FormControl aria-label="city" value={city} onChange={handle} placeholder="city" />
+          <FormControl aria-label="city" name="city" value={city} onChange={handle} placeholder="city" />
         </Col>
 
         <Col>
-          <FormControl aria-label="zip" value={zipcode} onChange={handle} placeholder="Zip code"/>
+          <FormControl type="number" aria-label="zip" name="zipcode" value={zipcode} onChange={handle} placeholder="Zip code"/>
         </Col>
         <Col xs={2}>
           <Form.Select aria-label="state"
+          name="state"
           value={state}
           onChange={handle}>
             {statesArray.map((state) =>

@@ -1,19 +1,75 @@
-import inputs from "../Inputs"
 import Form from "react-bootstrap/Form"
 import FormInput from "../components/FormInput"
 import { InputGroup, Row, Col, FormControl, FloatingLabel, Button } from "react-bootstrap"
 import { LinkContainer } from "react-router-bootstrap"
+import { useAppContext } from "../components/Context"
+import { useState } from "react"
+
+interface Inputs{
+    label: string;
+    directory: string
+    id: string;
+    type: string;
+    placeholder: string;
+    value: string;
+}
+
 
 const NewPrescription: React.FC = () => {
-
-    return(
+    const { patient, setPatient } = useAppContext();
+    const { doctor, setDoctor } = useAppContext();
+    const { rxItem, setRxItem } = useAppContext();
+    const [patientState, setPatientState] = useState<string>('')
+    const [doctorState, setDoctorState] = useState<string>('')
+    const [rxItemState, setRxItemState] = useState<string>('')
 
     
+    
+    const resetContext = () => {
+        setPatientState(patient)
+        setDoctorState(doctor)
+        setRxItemState(rxItem)
+    }
+    const inputs: Inputs[] = [
+        {
+        label:"Patient", 
+        directory: "patient_search",
+        id:"formPatientProfile", 
+        type: "patient", 
+        placeholder: "Patient Profile",
+        value: patientState
+        },
+        {
+        label: "Doctor", 
+        directory: "doctor_search",
+        id: "formDoctorProfile",
+        type: "doctor",
+        placeholder: "Doctor Profile",
+        value: doctorState
+        },
+        {
+        label: "Date of Prescription",
+        directory: "new_prescription",
+        id: "formDateOfPrescription",
+        type: "date",
+        placeholder: "Date Prescribed",
+        value: ""
+        },
+        {
+        label: "Medication",
+        directory: "medication_search",
+        id: "formMedicationProfile",
+        type: "medication",
+        placeholder: "Medication Profile",
+        value: rxItemState
+        }
+    ] 
+
+    return(
         <div className="content-wrapper"> 
-        
             <Form className="section px-5">
                 <h2>New Prescription</h2>
-                {inputs.map((obj) => <FormInput key={obj.id} label={obj.label} directory={obj.directory} type={obj.type} placeholder={obj.placeholder} />
+                {inputs.map((obj) => <FormInput key={obj.id} value={obj.value} label={obj.label} directory={obj.directory} type={obj.type} placeholder={obj.placeholder} />
             )}
                 <InputGroup >
                     <h4>Quantity:</h4>
@@ -63,7 +119,9 @@ const NewPrescription: React.FC = () => {
 
                 </InputGroup>
 
-                <Button style={{width: '200px'}} className="btn-primary">Print Label</Button>
+                <Button onClick={resetContext} style={{width: '200px'}} className="btn-primary">
+                    Print Label
+                </Button>
                 </div>
             </Form>
             <div className="line" />

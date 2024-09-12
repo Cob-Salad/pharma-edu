@@ -1,25 +1,66 @@
 import { Form, InputGroup, FormControl, FloatingLabel } from "react-bootstrap"
 import AddressInput from "./AddressInput"
+import { useState, useEffect} from "react"
+import { useAppContext } from "../components/Context"
+import { useParams } from "react-router-dom"
+import {fetchDoctor} from "../components/DoctorCalls"
+import { deletePrescriber } from "../components/DoctorCalls"
+
+interface Data {
+  prescriber_type: string,
+  state: string,
+  contact_number: string,
+  npi: string,
+  street: string,
+  id: number,
+  last_name: string,
+  first_name: string,
+  city: string,
+  zipcode: string,
+  dea: string
+  }
 
 
 const DoctorProfile: React.FC = () => {
+  const [editButton, setEditButton] = useState<string>("Edit")
+  const { setDoctor } = useAppContext();
 
+  let {id} = useParams()
+
+  const [response, setResponse] = useState<Data | undefined>();
+
+    useEffect(() => {
+      const grab = async () => {
+        const doctorData = await fetchDoctor(Number(id));
+        setResponse(doctorData);
+      }
+      grab()
+    },[])
+    
+  const handleDelete = async (id: number) => {
+    await deletePrescriber(id)
+  }
+
+  const changeEdit = () => {
+    if (editButton == "DELETE") {
+      handleDelete(Number(id))
+    }
+    setEditButton("DELETE")
+  }
+  const changeDelete = () => {
+    setEditButton("Edit")
+  }
   return (
     <div>
               <Form className="section pt-3 px-5">
-                <h2>Patient Information</h2>
+                <h2>Doctor Information</h2>
                 <InputGroup className="my-2" >
                   <InputGroup.Text>Last, First Name</InputGroup.Text>
-                  <FormControl aria-label="Last Name"  placeholder="Last Name"/>
-                  <FormControl aria-label="First Name" placeholder="First Name"/>
+                  <FormControl aria-label="Last Name" value={response?.last_name} placeholder="Last Name"/>
+                  <FormControl aria-label="First Name" value={response?.first_name} placeholder="First Name"/>
                 </InputGroup>
-                
-                <InputGroup className="my-2">
-                  <InputGroup.Text>Date of Birth</InputGroup.Text>
-                  <FormControl aria-label="date" type="date" />
-                </InputGroup>
-
-                <AddressInput />
+      
+                <AddressInput street={response?.street} city={response?.city} state={response?.state} zipcode={response?.zipcode} handle={undefined} />
 
                 <InputGroup className="my-2">
                   <InputGroup.Text>Primary Doctor</InputGroup.Text>

@@ -13,7 +13,7 @@ interface NavBarLinks {
 const routes: NavBarLinks[]= [ 
     {link:"Patient Profile", path:`/patients/:id`, component: PatientProfile },
     {link:"New Patient Profile", path:"/new_patient", component: NewPatientProfile},
-    {link:"Doctor Profile", path:"/doctor_profile", component: DoctorProfile}
+    {link:"Doctor Profile", path:"/prescribers/:id", component: DoctorProfile}
 ]
 
 

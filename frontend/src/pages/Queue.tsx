@@ -2,6 +2,7 @@ import React from 'react';
 import Navbar from '../components/Navbar';
 import NavItem from '../components/NavItem';
 import { Container } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
 const QueuePage: React.FC = () => {
   // Inline styles specific to QueuePage
@@ -36,9 +37,21 @@ const QueuePage: React.FC = () => {
   return (
     <div>
       <Container fluid={true} style={pageStyles.cardContainer}>
-        <Card title="Scan Image" />
-        <Card title="Scan Image" />
-        <Card title="Scan Image" />
+        <LinkContainer to="/new_prescription">
+          <div>
+          <Card title="Scan Image" />
+          </div>
+        </LinkContainer>
+        <LinkContainer to="/new_prescription">
+          <div>
+          <Card title="Scan Image" />
+          </div>
+        </LinkContainer> 
+        <LinkContainer to="/new_prescription">
+          <div>
+          <Card title="Scan Image" />
+          </div>
+        </LinkContainer> 
       </Container>
     </div>
   );

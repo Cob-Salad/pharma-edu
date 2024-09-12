@@ -6,6 +6,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import TempNavigation from './components/TempNavbar';
 import { Container } from 'react-bootstrap';
 import './assets/grayslash.svg'
+import { AppProvider } from './components/Context';
+
+
 
 {
   
@@ -20,11 +23,12 @@ function App() {
       <Container>
         <TempNavigation />
       </Container>
-      <Routes>
+      <AppProvider>
+      <Routes>  
         {nav_routes.map((obj)=> <Route key={obj.link} path={obj.path} element={<obj.component />} />)}
         {routes.map((obj)=> <Route key={obj.link} path={obj.path} element={<obj.component/>} />)}
       </Routes>
-      
+      </AppProvider>
       
     </div>
   );
